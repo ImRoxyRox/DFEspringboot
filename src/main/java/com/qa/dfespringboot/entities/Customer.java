@@ -42,6 +42,14 @@ public class Customer {
 		this.email = email;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -66,6 +74,7 @@ public class Customer {
 		this.email = email;
 	}
 
+//	the below are for testing purposes
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, firstName, id, lastName);
