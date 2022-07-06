@@ -31,20 +31,20 @@ public class CustomerController {
 
 	// GET=READ two reads available, ReadAll and ReadByID
 
-	// ReadAll
+	// ReadAll localhost:8080/customer/readAll
 	@GetMapping("/readAll")
 	public List<Customer> readAll() {
 		return this.customers;
 	}
 
-	// ReadByID only 1 not all
+	// ReadByID only 1 not all localhost:8080/customer/readById/
 	@GetMapping("/readById/{id}") // in{} it will pick any id/number. Path and variable have to match.
 	public Customer readById(@PathVariable int id) {
 		return this.customers.get(id);
 	}
 
-	// Post=Create
-	@PostMapping("/create") // localhost:8080/customer/create
+	// Post=Create localhost:8080/customer/create
+	@PostMapping("/create") 
 	public Customer create(@RequestBody Customer customer) {
 		this.customers.add(customer);
 
@@ -52,7 +52,7 @@ public class CustomerController {
 		return this.customers.get(this.customers.size() - 1);
 	}
 
-// Put=Update
+// Put=Update localhost:8080/customer/update/
 	@PutMapping("/update/{id}")
 	public Customer update(@PathVariable int id, @RequestBody Customer customer) {
 
@@ -66,7 +66,7 @@ public class CustomerController {
 		return this.customers.get(id);
 	}
 
-	// Delete=Delete
+	// Delete=Delete localhost:8080/customer/delete/
 	@DeleteMapping("/delete/{id}") 
 	public Customer delete(@PathVariable int id) {
 		return this.customers.remove(id);
