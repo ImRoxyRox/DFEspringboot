@@ -27,18 +27,18 @@ public class Customer {
 	public Customer() {
 	}
 
-	public Customer(String firstName, String lastNmae, String email) {
+	public Customer(String firstName, String lastName, String email) {
 		super();
 		this.firstName = firstName;
-		this.lastName = lastNmae;
+		this.lastName = lastName;
 		this.email = email;
 	}
 
-	public Customer(long id, String firstName, String lastNmae, String email) {
+	public Customer(long id, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
-		this.lastName = lastNmae;
+		this.lastName = lastName;
 		this.email = email;
 	}
 
