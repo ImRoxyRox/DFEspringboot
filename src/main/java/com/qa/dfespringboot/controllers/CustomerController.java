@@ -1,6 +1,5 @@
 package com.qa.dfespringboot.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,63 +12,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.dfespringboot.entities.Customer;
+import com.qa.dfespringboot.services.CustomerService;
 
-//uses JSON data (Java Script Object Notation)
 //Handle incoming http requests and send responses
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
 
-	// Temporary storage until we implement the real database later on
-	private List<Customer> customers = new ArrayList<>();
+	private CustomerService service;
 
-//	// Use this only to check the connection with Postman
-//	@GetMapping("/test") // localhost:8080/customer/test
-//	public String test() {
-//		return "Hello, World!";
-//	}
+//	creates dependency with CustomerService class
+	public CustomerController(CustomerService service) {
+		this.service = service;
+	}
 
-	// GET=READ two reads available, ReadAll and ReadByID
+//	POST=CREATE localhost:8080/customer/create
+	@PostMapping("/create")
+	public Customer create(@RequestBody Customer customer) {
+		return this.service.create(customer);
 
-	// ReadAll localhost:8080/customer/readAll
+	}
+
+//	GET=READ readAll localhost:8080/customer/readAll
 	@GetMapping("/readAll")
 	public List<Customer> readAll() {
-		return this.customers;
+		return this.service.getAll();
 	}
 
-	// ReadByID only 1 not all localhost:8080/customer/readById/
+//	GET=READ readById localhost:8080/customer/readById/
 	@GetMapping("/readById/{id}") // in{} it will pick any id/number. Path and variable have to match.
-	public Customer readById(@PathVariable int id) {
-		return this.customers.get(id);
+	public Customer readById(@PathVariable long id) {
+		return this.service.readById(id);
 	}
 
-	// Post=Create localhost:8080/customer/create
-	@PostMapping("/create") 
-	public Customer create(@RequestBody Customer customer) {
-		this.customers.add(customer);
-
-		// Returns the latest entry added to the list
-		return this.customers.get(this.customers.size() - 1);
-	}
-
-// Put=Update localhost:8080/customer/update/
+//	PUT=UPDATE localhost:8080/customer/update
 	@PutMapping("/update/{id}")
-	public Customer update(@PathVariable int id, @RequestBody Customer customer) {
+	public Customer update(@PathVariable long id, @RequestBody Customer customer) {
+		return this.service.update(id, customer);
 
-		// Removing the original customer
-		this.customers.remove(id);
-
-		// Add the updated customer
-		this.customers.add(id, customer);
-
-		// Return the updated user
-		return this.customers.get(id);
 	}
-
-	// Delete=Delete localhost:8080/customer/delete/
-	@DeleteMapping("/delete/{id}") 
-	public Customer delete(@PathVariable int id) {
-		return this.customers.remove(id);
+//  Changed to boolean to return true of false to match CustomerService
+// 	Delete=Delete localhost:8080/customer/delete/
+	@DeleteMapping("/delete/{id}")
+	public boolean delete(@PathVariable long id) {
+		return this.service.delete(id);
 	}
 }
 
